@@ -21,7 +21,14 @@ function fish_prompt
     else
       echo ''
     end
+  end
 
+  function get_arrow_color
+    if test $last_status -ne 0
+      echo 'red'
+    else
+      echo 'green'
+    end
   end
 
   # Setup colors
@@ -31,6 +38,7 @@ function fish_prompt
   set --local white (set_color white)
   set --local gray (set_color normal)
   set --local brwhite (set_color --bold white)
+  set --local arrow_color (set_color (get_arrow_color))
 
   set prompt_char_color (set_color --bold cyan)
 
@@ -44,11 +52,11 @@ function fish_prompt
   set --local exit_indicator (_exit_indicator)
 
   # Line 1
-  echo -n $red'┌'$cyan$USER$white'@'$cyan$__fish_prompt_hostname $normal(prompt_pwd)$normal
+  echo -n $arrow_color'┌'$cyan$USER$white'@'$cyan$__fish_prompt_hostname $normal(prompt_pwd)$normal
   __fish_git_prompt
   __fish_svn_prompt
   echo
 
   # Line 2
-  echo -n $red'└'(_exit_indicator)$prompt_char_color$__fish_prompt_char $normal
+  echo -n $arrow_color'└'$exit_indicator$prompt_char_color$__fish_prompt_char $normal
 end
