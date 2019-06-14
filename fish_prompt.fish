@@ -35,12 +35,19 @@ function fish_prompt
   set --local normal (set_color normal)
   set --local red (set_color red)
   set --local cyan (set_color cyan)
+  set --local green (set_color green)
   set --local white (set_color white)
   set --local gray (set_color normal)
   set --local brwhite (set_color --bold white)
   set --local arrow_color (set_color (get_arrow_color))
 
   set prompt_char_color (set_color --bold cyan)
+
+  function venv_status
+    if set --query VIRTUAL_ENV
+      echo -n ' <'(set_color green)(basename $VIRTUAL_ENV)(set_color normal)'>'
+    end
+  end
 
   # Configure __fish_git_prompt
   set --global __fish_git_prompt_showdirtystate true
@@ -55,6 +62,7 @@ function fish_prompt
   echo -n $arrow_color'┌'$cyan$USER$white'@'$cyan$__fish_prompt_hostname $normal(prompt_pwd)$normal
   __fish_git_prompt
   __fish_svn_prompt
+  venv_status
   echo
 
   # Line 2
