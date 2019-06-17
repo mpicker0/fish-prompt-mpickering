@@ -45,7 +45,10 @@ function fish_prompt
 
   function venv_status
     if set --query VIRTUAL_ENV
-      echo -n ' <'(set_color green)(basename $VIRTUAL_ENV)(set_color normal)'>'
+      # TODO if using pipenv, the name might be long/obscure; show only an indicator?
+      # TODO configure the indicator?
+      #echo -n ' <'(set_color green)(basename $VIRTUAL_ENV)(set_color normal)'>'
+      echo -n ' 🐍 '(set_color green)(basename $VIRTUAL_ENV)(set_color normal)
     end
   end
 
