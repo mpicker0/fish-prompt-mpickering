@@ -6,6 +6,12 @@ function fish_prompt
   if not set --query __fish_prompt_hostname
     set --global __fish_prompt_hostname (hostname|cut -d . -f 1)
   end
+  if not set --query __fish_prompt_remote
+    set --global __fish_prompt_remote ''
+    if set --query SSH_CONNECTION
+      set --global __fish_prompt_remote 📡
+    end
+  end
   if not set --query __fish_prompt_char
     switch (id -u)
       case 0
@@ -62,7 +68,7 @@ function fish_prompt
   set --local exit_indicator (_exit_indicator)
 
   # Line 1
-  echo -n $arrow_color'┌'$cyan$USER$white'@'$cyan$__fish_prompt_hostname $normal(prompt_pwd)$normal
+  echo -n $arrow_color'┌'$cyan$USER$white'@'$cyan$__fish_prompt_hostname$__fish_prompt_remote $normal(prompt_pwd)$normal
   __fish_git_prompt
   __fish_svn_prompt
   venv_status
